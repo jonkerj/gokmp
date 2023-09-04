@@ -1,0 +1,4 @@
+gokmp
+*.test
+*~
+.DS_Store

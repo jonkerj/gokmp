@@ -5,31 +5,25 @@ import (
 )
 
 type (
-	GetSerialNoCommand struct {
-		Command
+	GetSerialNo struct {
 		Serial uint32
 	}
 )
 
-func NewGetSerialNoCommand(destination datalink.Destination) *GetSerialNoCommand {
-	return &GetSerialNoCommand{
-		Command: Command{
-			CID:                CommandGetSerialNo,
-			DestinationAddress: destination,
-		},
-	}
+func NewGetSerialNo() GetSerialNo {
+	return GetSerialNo{}
 }
 
-func (g *GetSerialNoCommand) ToFrame() *datalink.Frame {
-	f := g.ToBasicFrame()
+func (g GetSerialNo) ToFrame() datalink.Frame {
+	f := basicCommandFrame(CommandGetSerialNo)
 	f.Checksum = f.CalculateCRC()
 	f.FrameType = datalink.FrameTypeCommand
 
 	return f
 }
 
-func GetSerialNoCommandFromFrame(f *datalink.Frame) (*GetSerialNoCommand, error) {
-	c := NewGetSerialNoCommand(f.DestinationAddress)
+func (g GetSerialNo) FromFrame(f datalink.Frame) (Command, error) {
+	c := NewGetSerialNo()
 	if len(f.Data) < 5 {
 		return nil, ErrShortSerial
 	}

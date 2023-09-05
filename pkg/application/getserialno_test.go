@@ -7,11 +7,11 @@ import (
 	"github.com/jonkerj/gokmp/pkg/datalink"
 )
 
-func TestGetSerialNoCommandFromFrame(t *testing.T) {
+func TestGetSerialNo_FromFrame(t *testing.T) {
 	tests := []struct {
 		name    string
 		frame   datalink.Frame
-		want    *GetSerialNoCommand
+		want    GetSerialNo
 		wantErr bool
 	}{
 		{
@@ -22,11 +22,7 @@ func TestGetSerialNoCommandFromFrame(t *testing.T) {
 				Data:               []byte{0x02, 0x01, 0x23, 0x45, 0x67},
 				Checksum:           0xe956,
 			},
-			want: &GetSerialNoCommand{
-				Command: Command{
-					CID:                CommandGetSerialNo,
-					DestinationAddress: datalink.DestinationHeatMeter,
-				},
+			want: GetSerialNo{
 				Serial: 19088743,
 			},
 			wantErr: false,
@@ -34,23 +30,23 @@ func TestGetSerialNoCommandFromFrame(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := GetSerialNoCommandFromFrame(&tt.frame)
+			got, err := (&GetSerialNo{}).FromFrame(tt.frame)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("GetSerialNoCommandFromFrame() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("GetSerialNo.FromFrame() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if diff := deep.Equal(got, tt.want); diff != nil {
-				t.Errorf("GetSerialNoCommandFromFrame() = %v, want %v, diff %v", got, tt.want, diff)
+				t.Errorf("GetSerialNo.FromFrame() = %v, want %v, diff %v", got, tt.want, diff)
 			}
 		})
 	}
 }
 
-func TestGetSerialNoCommand_ToFrame(t *testing.T) {
+func TestGetSerialNo_ToFrame(t *testing.T) {
 	t.Run("getserial command", func(t *testing.T) {
-		cmd := NewGetSerialNoCommand(datalink.DestinationHeatMeter)
+		cmd := NewGetSerialNo()
 		got := cmd.ToFrame()
-		want := &datalink.Frame{
+		want := datalink.Frame{
 			DestinationAddress: datalink.DestinationHeatMeter,
 			FrameType:          datalink.FrameTypeCommand,
 			Data:               []byte{CommandGetSerialNo},
@@ -58,7 +54,7 @@ func TestGetSerialNoCommand_ToFrame(t *testing.T) {
 		}
 
 		if diff := deep.Equal(got, want); diff != nil {
-			t.Errorf("GetSerialNoCommandToFrame() = %v, want %v, diff %v", got, want, diff)
+			t.Errorf("GetSerialNo.ToFrame() = %v, want %v, diff %v", got, want, diff)
 		}
 	})
 }

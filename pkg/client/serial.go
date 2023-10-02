@@ -68,6 +68,17 @@ func (s *SerialClient) command(command application.Command) (application.Command
 	return response, nil
 }
 
+func (s *SerialClient) GetType() (uint16, uint16, error) {
+	command := application.NewGetType()
+	response, err := s.command(command)
+	if err != nil {
+		return 0, 0, err
+	}
+
+	gt := response.(application.GetType)
+	return gt.Type, gt.Version, nil
+}
+
 func (s *SerialClient) GetSerialNo() (uint32, error) {
 	command := application.NewGetSerialNo()
 	response, err := s.command(command)

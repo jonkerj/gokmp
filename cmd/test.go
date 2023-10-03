@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/jonkerj/gokmp/pkg/application"
 	"github.com/jonkerj/gokmp/pkg/client"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -36,7 +37,7 @@ func testMeter(cmd *cobra.Command, args []string) {
 		panic(err)
 	}
 
-	err = port.SetReadTimeout(1600 * time.Millisecond)
+	err = port.SetReadTimeout(100 * time.Millisecond)
 	if err != nil {
 		panic(err)
 	}
@@ -55,4 +56,18 @@ func testMeter(cmd *cobra.Command, args []string) {
 	}
 
 	fmt.Printf("type: %02x, version: %02x, serial: %d\n", typ, version, sn)
+	fetchEm := []application.RegisterID{
+		application.RegisterHeatEnergy,
+		application.RegisterVolumeRegister1,
+		application.RegisterCurrentInTemp,
+		application.RegisterCurrentReturnTemp,
+	}
+	regs, err := c.GetRegister(fetchEm)
+	if err != nil {
+		panic(err)
+	}
+
+	for _, r := range regs {
+		fmt.Println(r)
+	}
 }

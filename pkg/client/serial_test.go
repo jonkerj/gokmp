@@ -90,7 +90,7 @@ func TestSerialClient(t *testing.T) {
 		}
 	})
 	t.Run("SerialClient.GetRegister()", func(t *testing.T) {
-		registers, err := c.GetRegister([]uint16{0x0080})
+		registers, err := c.GetRegister([]application.RegisterID{0x0080})
 		if err != nil {
 			t.Errorf("SerialClient.GetRegister() returned error: %v", err)
 		}

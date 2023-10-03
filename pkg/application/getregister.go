@@ -1,6 +1,7 @@
 package application
 
 import (
+	_ "embed"
 	"fmt"
 
 	"github.com/jonkerj/gokmp/pkg/datalink"
@@ -9,8 +10,14 @@ import (
 type (
 	Unit byte
 
+	RegisterInfo struct {
+		Id          RegisterID
+		Name        string
+		Description string
+	}
+
 	Register struct {
-		Id    uint16
+		Id    RegisterID
 		Unit  Unit
 		Value float64
 	}
@@ -20,7 +27,7 @@ type (
 	}
 )
 
-func NewGetRegister(registerIds []uint16) GetRegister {
+func NewGetRegister(registerIds []RegisterID) GetRegister {
 	registers := []Register{}
 	for _, r := range registerIds {
 		registers = append(registers, Register{Id: r})
@@ -44,7 +51,7 @@ func (g GetRegister) ToFrame() datalink.Frame {
 }
 
 func (g GetRegister) FromFrame(f datalink.Frame) (Command, error) {
-	c := NewGetRegister([]uint16{})
+	c := NewGetRegister([]RegisterID{})
 	remaining := f.Data[1:] // strip CID
 	for len(remaining) > 0 {
 		register, len, err := RegisterFromBytes(remaining)
@@ -121,7 +128,7 @@ func RegisterFromBytes(data []byte) (*Register, byte, error) {
 	}
 
 	r := &Register{
-		Id:    uint16(data[0])<<8 + uint16(data[1]),
+		Id:    RegisterID(uint16(data[0])<<8 + uint16(data[1])),
 		Unit:  Unit(data[2]),
 		Value: value,
 	}
@@ -129,6 +136,6 @@ func RegisterFromBytes(data []byte) (*Register, byte, error) {
 	return r, len + 5, nil
 }
 
-func (r *Register) String() string {
-	return fmt.Sprintf("%04x: %v %s", r.Id, r.Value, r.Unit)
+func (r Register) String() string {
+	return fmt.Sprintf("%v: %v %v", r.Id, r.Value, r.Unit)
 }

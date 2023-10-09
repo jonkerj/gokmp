@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -18,6 +19,7 @@ var (
 func init() {
 	viper.AutomaticEnv()
 	viper.SetEnvPrefix("gokmp")
+	viper.SetEnvKeyReplacer(strings.NewReplacer(`-`, `_`))
 	flags := rootCmd.PersistentFlags()
 	flags.String("port", "/dev/ttyUSB0", "serial port")
 	viper.BindPFlags(flags)

@@ -1,0 +1,398 @@
+[
+  {
+    "Id": "003c",
+    "Name": "E1",
+    "Description": "Energy register 1: Heat energy",
+    "Const": "HeatEnergy"
+  },
+  {
+    "Id": "003d",
+    "Name": "E4",
+    "Description": "Energy register 4: Flow energy",
+    "Const": "FlowEnergy"
+  },
+  {
+    "Id": "003e",
+    "Name": "E5",
+    "Description": "Energy register 5: Return flow energy",
+    "Const": "ReturnFlowEnergy"
+  },
+  {
+    "Id": "003f",
+    "Name": "E3",
+    "Description": "Energy register 3: Cooling energy",
+    "Const": "CoolingEnergy"
+  },
+  {
+    "Id": "0040",
+    "Name": "TA2",
+    "Description": "Tariff register 2",
+    "Const": "TariffRegister2"
+  },
+  {
+    "Id": "0041",
+    "Name": "TA3",
+    "Description": "Tariff register 3",
+    "Const": "TariffRegister3"
+  },
+  {
+    "Id": "0042",
+    "Name": "TL2",
+    "Description": "Tariff limit 2",
+    "Const": "TariffLimit2"
+  },
+  {
+    "Id": "0043",
+    "Name": "TL3",
+    "Description": "Tariff limit 3",
+    "Const": "TariffLimit3"
+  },
+  {
+    "Id": "0044",
+    "Name": "V1",
+    "Description": "Volume register V1",
+    "Const": "VolumeRegister1"
+  },
+  {
+    "Id": "0045",
+    "Name": "V1",
+    "Description": "Volume register V2",
+    "Const": "VolumeRegister2"
+  },
+  {
+    "Id": "0048",
+    "Name": "M1",
+    "Description": "Mass register V1",
+    "Const": "MassRegister1"
+  },
+  {
+    "Id": "0049",
+    "Name": "M2",
+    "Description": "Mass register V2",
+    "Const": "MassRegister2"
+  },
+  {
+    "Id": "004a",
+    "Name": "FLOW1",
+    "Description": "Current flow in flow",
+    "Const": "CurrentInFlow"
+  },
+  {
+    "Id": "004b",
+    "Name": "FLOW2",
+    "Description": "Current flow in return flow",
+    "Const": "CurrentReturnFlow"
+  },
+  {
+    "Id": "0050",
+    "Name": "EFFEKT1",
+    "Description": "Current power calculated on the basis of V1-T1-T2",
+    "Const": "CurrentPower"
+  },
+  {
+    "Id": "0054",
+    "Name": "VA",
+    "Description": "Input register VA",
+    "Const": "InputVA"
+  },
+  {
+    "Id": "0055",
+    "Name": "VB",
+    "Description": "Input register VB",
+    "Const": "InputVB"
+  },
+  {
+    "Id": "0056",
+    "Name": "T1",
+    "Description": "Current flow temperature",
+    "Const": "CurrentInTemp"
+  },
+  {
+    "Id": "0057",
+    "Name": "T2",
+    "Description": "Current return flow temperature",
+    "Const": "CurrentReturnTemp"
+  },
+  {
+    "Id": "0058",
+    "Name": "T3",
+    "Description": "Current temperature T3",
+    "Const": "CurrentT3Temp"
+  },
+  {
+    "Id": "0059",
+    "Name": "T1-T2",
+    "Description": "Current temperature difference",
+    "Const": "CurrentTempDifference"
+  },
+  {
+    "Id": "005b",
+    "Name": "P1",
+    "Description": "Pressure in flow",
+    "Const": "CurrentInPressure"
+  },
+  {
+    "Id": "005c",
+    "Name": "P2",
+    "Description": "Pressure in return flow",
+    "Const": "CurrentReturnPressure"
+  },
+  {
+    "Id": "005e",
+    "Name": "E2",
+    "Description": "Control energy",
+    "Const": "ControlEnergy"
+  },
+  {
+    "Id": "005f",
+    "Name": "E6",
+    "Description": "Energy register 6: Tap water energy",
+    "Const": "TapEnergy"
+  },
+  {
+    "Id": "0060",
+    "Name": "E7",
+    "Description": "Energy register 7: Heat energy Y",
+    "Const": "YEnergy"
+  },
+  {
+    "Id": "0061",
+    "Name": "E8",
+    "Description": "Energy register 8: m³ x T1",
+    "Const": "Energy8"
+  },
+  {
+    "Id": "0063",
+    "Name": "INFO",
+    "Description": "Infocode, current",
+    "Const": "Infocode"
+  },
+  {
+    "Id": "0068",
+    "Name": "METER NO VB",
+    "Description": "Meter no for VB",
+    "Const": "MeterNoVB"
+  },
+  {
+    "Id": "006e",
+    "Name": "E9",
+    "Description": "Energy register 9: m³ x T2",
+    "Const": "Energy9"
+  },
+  {
+    "Id": "0070",
+    "Name": "METER NO 2",
+    "Description": "Customer number (8 most important digits)",
+    "Const": "MeterNo2"
+  },
+  {
+    "Id": "0071",
+    "Name": "INFOEVENT",
+    "Description": "Info-event counter",
+    "Const": "InfoEvent"
+  },
+  {
+    "Id": "0072",
+    "Name": "METER NO VA",
+    "Description": "Meter no for VA",
+    "Const": "MeterNoVA"
+  },
+  {
+    "Id": "007a",
+    "Name": "T4",
+    "Description": "Current temperature T4",
+    "Const": "CurrentT4Temp"
+  },
+  {
+    "Id": "007b",
+    "Name": "MAX FLOW1DATE/ÅR",
+    "Description": "Date for max flow this year",
+    "Const": "MaxFlowYTDDate"
+  },
+  {
+    "Id": "007c",
+    "Name": "MAX FLOW1/ÅR",
+    "Description": "Value for max flow this year",
+    "Const": "MaxFlowYTDValue"
+  },
+  {
+    "Id": "007d",
+    "Name": "MIN FLOW1DATE/ÅR",
+    "Description": "Date for min flow this year",
+    "Const": "MinFlowYTDDate"
+  },
+  {
+    "Id": "007e",
+    "Name": "MIN FLOW1/ÅR",
+    "Description": "Value for min flow this year",
+    "Const": "MinFlowYTDValue"
+  },
+  {
+    "Id": "007f",
+    "Name": "MAX EFFEKT1/ÅR",
+    "Description": "Date for max effekt this year",
+    "Const": "MaxPowerYTDDate"
+  },
+  {
+    "Id": "0080",
+    "Name": "MAX EFFEKT1/ÅR",
+    "Description": "Value for max effekt this year",
+    "Const": "MaxPowerYTDValue"
+  },
+  {
+    "Id": "0081",
+    "Name": "MIN EFFEKT1DATE/ÅR",
+    "Description": "Date for min effekt this year",
+    "Const": "MinPowerYTDDate"
+  },
+  {
+    "Id": "0082",
+    "Name": "MIN EFFEKT1/ÅR",
+    "Description": "Value for min effekt this year",
+    "Const": "MinPowerYTDValue"
+  },
+  {
+    "Id": "008a",
+    "Name": "MAX FLOW1DATE/MÅNED",
+    "Description": "Date for max flow this month",
+    "Const": "MaxFlowMTDDate"
+  },
+  {
+    "Id": "008b",
+    "Name": "MAX FLOW1/MÅNED",
+    "Description": "Value for max flow this month",
+    "Const": "MaxFlowMTDValue"
+  },
+  {
+    "Id": "008c",
+    "Name": "MIN FLOW1DATE/MÅNED",
+    "Description": "Date for min flow this month",
+    "Const": "MinFlowMTDDate"
+  },
+  {
+    "Id": "008d",
+    "Name": "MIN FLOW1/MÅNED",
+    "Description": "Value for min flow this month",
+    "Const": "MinFlowMTDValue"
+  },
+  {
+    "Id": "008e",
+    "Name": "MAX EFFEKT1/MÅNED",
+    "Description": "Date for max effekt this month",
+    "Const": "MaxPowerMTDDate"
+  },
+  {
+    "Id": "008f",
+    "Name": "MAX EFFEKT1/MÅNED",
+    "Description": "Value for max effekt this month",
+    "Const": "MaxPowerMTDValue"
+  },
+  {
+    "Id": "0090",
+    "Name": "MIN EFFEKT1DATE/MÅNED",
+    "Description": "Date for min effekt this month",
+    "Const": "MinPowerMTDDate"
+  },
+  {
+    "Id": "0091",
+    "Name": "MIN EFFEKT1/MÅNED",
+    "Description": "Value for min effekt this month",
+    "Const": "MinPowerMTDValue"
+  },
+  {
+    "Id": "0092",
+    "Name": "AVR T1/ÅR",
+    "Description": "Year-to-date average for T1",
+    "Const": "AvgT1YTD"
+  },
+  {
+    "Id": "0093",
+    "Name": "AVR T2/ÅR",
+    "Description": "Year-to-date average for T2",
+    "Const": "AvgT2YTD"
+  },
+  {
+    "Id": "0095",
+    "Name": "AVR T1/MÅNED",
+    "Description": "Month-to-date average for T1",
+    "Const": "AvgT1MTD"
+  },
+  {
+    "Id": "0096",
+    "Name": "AVR T2/MÅNED",
+    "Description": "Month-to-date average for T2",
+    "Const": "AvgT2MTD"
+  },
+  {
+    "Id": "0099",
+    "Name": "CONFIG NO 1",
+    "Description": "Config no. DDDEE",
+    "Const": "ConfigNo1"
+  },
+  {
+    "Id": "009a",
+    "Name": "CHECK SUM 1",
+    "Description": "Software check sum",
+    "Const": "Checksum1"
+  },
+  {
+    "Id": "00a8",
+    "Name": "CONFIG NO 2",
+    "Description": "Config no. FFGGMN",
+    "Const": "ConfigNo2"
+  },
+  {
+    "Id": "00af",
+    "Name": "ERRORHOURCOUNTER",
+    "Description": "Error hour counter",
+    "Const": "ErrorHourCounter"
+  },
+  {
+    "Id": "00ea",
+    "Name": "INA LITERIMP",
+    "Description": "Liter/imp for input A",
+    "Const": "InALiterImp"
+  },
+  {
+    "Id": "00eb",
+    "Name": "INB LITERIMP",
+    "Description": "Liter/imp for input B",
+    "Const": "InBLiterImp"
+  },
+  {
+    "Id": "03e9",
+    "Name": "SERIE NO",
+    "Description": "Serial no. (unique number for each meter)",
+    "Const": "SerialNo"
+  },
+  {
+    "Id": "03ea",
+    "Name": "CLOCK",
+    "Description": "Current time (hhmmss)",
+    "Const": "Clock"
+  },
+  {
+    "Id": "03eb",
+    "Name": "DATE",
+    "Description": "Current date (YYMMDD)",
+    "Const": "Date"
+  },
+  {
+    "Id": "03ec",
+    "Name": "HR",
+    "Description": "Operational hour counter",
+    "Const": "OperationalHours"
+  },
+  {
+    "Id": "03ed",
+    "Name": "METER TYPE",
+    "Description": "Software edition",
+    "Const": "SoftwareEdition"
+  },
+  {
+    "Id": "03f2",
+    "Name": "METER NO 1",
+    "Description": "Customer number (LS)",
+    "Const": "MeterNo1"
+  }
+]

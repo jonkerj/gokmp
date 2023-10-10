@@ -21,7 +21,10 @@ func init() {
 	viper.SetEnvPrefix("gokmp")
 	viper.SetEnvKeyReplacer(strings.NewReplacer(`-`, `_`))
 	flags := rootCmd.PersistentFlags()
-	flags.String("port", "/dev/ttyUSB0", "serial port")
+	flags.String("port", "", "serial port")
+	flags.String("serial-pid", "6001", "USB PID of serial port")
+	flags.String("serial-vid", "0403", "USB VID of serial port")
+	flags.String("serial-serial", "", "USB Serial number of serial port")
 	viper.BindPFlags(flags)
 }
 

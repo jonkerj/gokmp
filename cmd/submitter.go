@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/jonkerj/gokmp/internal/serial"
 	"github.com/jonkerj/gokmp/internal/submitter"
 	"github.com/jonkerj/gokmp/pkg/client"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"go.bug.st/serial"
 )
 
 var (
@@ -36,28 +36,13 @@ func init() {
 }
 
 func submit(cmd *cobra.Command, args []string) {
-	port, err := serial.Open(
-		viper.GetString("port"),
-		&serial.Mode{
-			BaudRate: 1200,
-			DataBits: 8,
-			StopBits: 2,
-			Parity:   serial.NoParity,
-		},
-	)
-	if err != nil {
-		panic(err)
-	}
-
-	err = port.SetReadTimeout(100 * time.Millisecond)
+	port, err := serial.Open(viper.GetString("port"), viper.GetString("serial-vid"), viper.GetString("serial-pid"), viper.GetString("serial-serial"))
 	if err != nil {
 		panic(err)
 	}
 
 	c := client.NewSerialClient(port)
-
 	sn, err := c.GetSerialNo()
-
 	if err != nil {
 		panic(err)
 	}

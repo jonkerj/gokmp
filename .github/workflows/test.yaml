@@ -64,7 +64,10 @@ jobs:
     needs:
     - golangci
     - codeql
+<<<<<<< HEAD
     - gotest
+=======
+>>>>>>> fb31ec1 (chore: add GitHub CI/CD)
     strategy:
       matrix:
         goos: [linux]

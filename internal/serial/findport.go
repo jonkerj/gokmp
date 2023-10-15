@@ -31,7 +31,6 @@ func getPortName(portName, vid, pid, serialNo string) (string, error) {
 	}
 
 	for _, port := range ports {
-		fmt.Println(port)
 		if port.IsUSB && port.VID == vid && port.PID == pid && port.SerialNumber == serialNo {
 			return port.Name, nil
 		}

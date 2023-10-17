@@ -33,17 +33,29 @@ func (s *SerialClient) command(command application.Command) (application.Command
 		return nil, fmt.Errorf("short write: %d bytes written, but command was %d bytes long", written, len(commandBytes))
 	}
 
-	responseBytes := make([]byte, 1024) // probbaly too much
-	read, err := s.port.Read(responseBytes)
-	if err != nil {
-		return nil, fmt.Errorf("could not read from port: %w", err)
+	buff := make([]byte, 1024) // probbaly too much
+	bytesRead := []byte{}
+
+	for {
+		lenRead, err := s.port.Read(buff)
+		if err != nil {
+			return nil, fmt.Errorf("could not read from port: %w", err)
+		}
+
+		if lenRead == 0 {
+			break
+		}
+
+		bytesRead = append(bytesRead, buff[:lenRead]...)
 	}
 
-	if read < 5 {
-		return nil, fmt.Errorf("short read: %d bytes read", read)
+	bytesRead = bytesRead[len(commandBytes):] // remove command echo
+
+	if len(bytesRead) < 5 {
+		return nil, fmt.Errorf("short read: %d bytes read", len(bytesRead))
 	}
 
-	responseFrame, err := datalink.DecodeFrame(responseBytes[:read])
+	responseFrame, err := datalink.DecodeFrame(bytesRead)
 	if err != nil {
 		return nil, fmt.Errorf("could not decode data into frame: %w", err)
 	}

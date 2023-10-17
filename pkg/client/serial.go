@@ -2,6 +2,7 @@ package client
 
 import (
 	"fmt"
+	"log/slog"
 
 	"github.com/jonkerj/gokmp/pkg/application"
 	"github.com/jonkerj/gokmp/pkg/datalink"
@@ -69,6 +70,7 @@ func (s *SerialClient) command(command application.Command) (application.Command
 }
 
 func (s *SerialClient) GetType() (uint16, uint16, error) {
+	slog.Debug("GetType")
 	command := application.NewGetType()
 	response, err := s.command(command)
 	if err != nil {
@@ -80,6 +82,7 @@ func (s *SerialClient) GetType() (uint16, uint16, error) {
 }
 
 func (s *SerialClient) GetSerialNo() (uint32, error) {
+	slog.Debug("GetSerialNo")
 	command := application.NewGetSerialNo()
 	response, err := s.command(command)
 	if err != nil {
@@ -90,6 +93,7 @@ func (s *SerialClient) GetSerialNo() (uint32, error) {
 }
 
 func (s *SerialClient) GetRegister(registerIds []application.RegisterID) ([]application.Register, error) {
+	slog.Debug("GetRegister", "registers", fmt.Sprintf("%v", registerIds))
 	command := application.NewGetRegister(registerIds)
 	response, err := s.command(command)
 	if err != nil {

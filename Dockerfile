@@ -11,4 +11,4 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
 
 FROM scratch
 COPY --from=builder /app /app
-ENTRYPOINT ["/app"]
+ENTRYPOINT ["/app", "submitter"]

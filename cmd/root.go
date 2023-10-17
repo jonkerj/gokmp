@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"fmt"
+	"log/slog"
+	"os"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -25,7 +27,18 @@ func init() {
 	flags.String("serial-pid", "6001", "USB PID of serial port")
 	flags.String("serial-vid", "0403", "USB VID of serial port")
 	flags.String("serial-serial", "", "USB Serial number of serial port")
-	viper.BindPFlags(flags)
+	flags.Bool("verbose", false, "Verbose logging")
+	if err := viper.BindPFlags(flags); err != nil {
+		panic(err)
+	}
+
+	level := slog.LevelInfo
+	if viper.GetBool("verbose") {
+		level = slog.LevelDebug
+	}
+	handler := slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: level})
+	logger := slog.New(handler)
+	slog.SetDefault(logger)
 }
 
 func root(cmd *cobra.Command, args []string) {
@@ -33,5 +46,7 @@ func root(cmd *cobra.Command, args []string) {
 }
 
 func Execute() {
-	rootCmd.Execute()
+	if err := rootCmd.Execute(); err != nil {
+		panic(err)
+	}
 }

@@ -28,7 +28,3 @@ func BinaryToFloat(b []byte) (float64, error) {
 
 	return float64(mantissa) * math.Pow(10, exponent), nil
 }
-
-func inEpsilon(a, b, epsilon float64) bool {
-	return math.Abs(a-b) <= epsilon
-}

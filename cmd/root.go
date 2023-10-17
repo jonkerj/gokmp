@@ -15,6 +15,17 @@ var (
 		Use:   "gokmp",
 		Short: "tool to talk with your KMP meters",
 		Run:   root,
+		PersistentPreRun: func(cmd *cobra.Command, args []string) {
+			level := slog.LevelInfo
+			if viper.GetBool("verbose") {
+				fmt.Println("setting verbose")
+				level = slog.LevelDebug
+			}
+
+			handler := slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: level})
+			logger := slog.New(handler)
+			slog.SetDefault(logger)
+		},
 	}
 )
 
@@ -31,14 +42,6 @@ func init() {
 	if err := viper.BindPFlags(flags); err != nil {
 		panic(err)
 	}
-
-	level := slog.LevelInfo
-	if viper.GetBool("verbose") {
-		level = slog.LevelDebug
-	}
-	handler := slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: level})
-	logger := slog.New(handler)
-	slog.SetDefault(logger)
 }
 
 func root(cmd *cobra.Command, args []string) {

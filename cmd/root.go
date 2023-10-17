@@ -28,7 +28,9 @@ func init() {
 	flags.String("serial-vid", "0403", "USB VID of serial port")
 	flags.String("serial-serial", "", "USB Serial number of serial port")
 	flags.Bool("verbose", false, "Verbose logging")
-	viper.BindPFlags(flags)
+	if err := viper.BindPFlags(flags); err != nil {
+		panic(err)
+	}
 
 	level := slog.LevelInfo
 	if viper.GetBool("verbose") {
@@ -44,5 +46,7 @@ func root(cmd *cobra.Command, args []string) {
 }
 
 func Execute() {
-	rootCmd.Execute()
+	if err := rootCmd.Execute(); err != nil {
+		panic(err)
+	}
 }

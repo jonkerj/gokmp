@@ -8,22 +8,15 @@ import (
 	"github.com/jonkerj/gokmp/pkg/datalink"
 )
 
-func TestEncodeGetRegisterCommand(t *testing.T) {
+func TestEncodeGetRegister(t *testing.T) {
 	tests := []struct {
 		name    string
-		command *application.GetRegisterCommand
+		command application.GetRegister
 		want    []byte
 	}{
 		{
 			"getregister command",
-			&application.GetRegisterCommand{
-				Command: application.Command{CID: application.CommandGetRegister, DestinationAddress: datalink.DestinationHeatMeter},
-				Registers: []*application.Register{
-					&application.Register{
-						Id: 0x0080,
-					},
-				},
-			},
+			application.GetRegister{Registers: []application.Register{{Id: 0x0080}}},
 			[]byte{0x80, 0x3f, 0x10, 0x01, 0x00, 0x1b, 0x7f, 0xd4, 0x08, 0x0d},
 		},
 	}
@@ -44,22 +37,19 @@ func TestDecodeGetRegisterReponse(t *testing.T) {
 	tests := []struct {
 		name            string
 		wire            []byte
-		want            *application.GetRegisterCommand
+		want            application.GetRegister
 		wantFrameErr    bool
 		wantRegisterErr bool
 	}{
 		{
 			"getregister response",
 			[]byte{0x40, 0x3f, 0x10, 0x00, 0x1b, 0x7f, 0x16, 0x04, 0x11, 0x01, 0x2a, 0xf0, 0x24, 0x63, 0x03, 0x0d},
-			&application.GetRegisterCommand{
-				Command: application.Command{CID: application.CommandGetRegister, DestinationAddress: datalink.DestinationHeatMeter},
-				Registers: []*application.Register{
-					&application.Register{
-						Id:    0x0080,
-						Unit:  application.Unit(0x16),
-						Value: 1.9591204e+24,
-					},
-				},
+			application.GetRegister{
+				Registers: []application.Register{{
+					Id:    0x0080,
+					Unit:  application.Unit(0x16),
+					Value: 1.9591204e+24,
+				}},
 			},
 			false,
 			false,
@@ -74,7 +64,7 @@ func TestDecodeGetRegisterReponse(t *testing.T) {
 				return
 			}
 
-			got, err := application.GetRegisterCommandFromFrame(f)
+			got, err := (&application.GetRegister{}).FromFrame(*f)
 			if (err != nil) != tt.wantRegisterErr {
 				t.Errorf("DecodeFrame() error = %v, wantErr %v", err, tt.wantRegisterErr)
 				return

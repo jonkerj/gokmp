@@ -47,6 +47,7 @@ jobs:
     needs:
     - golangci
     - codeql
+    - gotest
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -63,6 +64,7 @@ jobs:
     needs:
     - golangci
     - codeql
+    - gotest
     strategy:
       matrix:
         goos: [linux]

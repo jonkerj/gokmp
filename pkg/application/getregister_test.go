@@ -11,12 +11,12 @@ import (
 func TestGetRegisterCommand_ToFrame(t *testing.T) {
 	tests := []struct {
 		name      string
-		registers []uint16
+		registers []RegisterID
 		want      datalink.Frame
 	}{
 		{
 			name:      "test1",
-			registers: []uint16{0x0080},
+			registers: []RegisterID{RegisterID(0x0080)},
 			want: datalink.Frame{
 				DestinationAddress: 0x3f,
 				FrameType:          datalink.FrameTypeCommand,

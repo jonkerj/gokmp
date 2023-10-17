@@ -89,7 +89,7 @@ func (s *SerialClient) GetSerialNo() (uint32, error) {
 	return response.(application.GetSerialNo).Serial, nil
 }
 
-func (s *SerialClient) GetRegister(registerIds []uint16) ([]application.Register, error) {
+func (s *SerialClient) GetRegister(registerIds []application.RegisterID) ([]application.Register, error) {
 	command := application.NewGetRegister(registerIds)
 	response, err := s.command(command)
 	if err != nil {

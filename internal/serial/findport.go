@@ -3,6 +3,7 @@ package serial
 import (
 	"errors"
 	"fmt"
+	"log/slog"
 	"time"
 
 	"go.bug.st/serial"
@@ -31,6 +32,7 @@ func getPortName(portName, vid, pid, serialNo string) (string, error) {
 	}
 
 	for _, port := range ports {
+		slog.Debug("examing serial port", "port", port.Name)
 		if port.IsUSB && port.VID == vid && port.PID == pid && port.SerialNumber == serialNo {
 			return port.Name, nil
 		}
@@ -40,11 +42,13 @@ func getPortName(portName, vid, pid, serialNo string) (string, error) {
 }
 
 func Open(givenPortName, vid, pid, serialNo string) (serial.Port, error) {
+	slog.Debug("finding serial port")
 	portName, err := getPortName(givenPortName, vid, pid, serialNo)
 	if err != nil {
 		return nil, err
 	}
 
+	slog.Debug("opening port", "port", portName)
 	port, err := serial.Open(
 		portName,
 		&serial.Mode{
@@ -58,6 +62,7 @@ func Open(givenPortName, vid, pid, serialNo string) (serial.Port, error) {
 		return nil, err
 	}
 
+	slog.Debug("setting read timeout")
 	err = port.SetReadTimeout(100 * time.Millisecond)
 	if err != nil {
 		return nil, err

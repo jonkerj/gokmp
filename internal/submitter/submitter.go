@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log/slog"
 	"time"
 
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
@@ -42,6 +43,7 @@ func NewSubmitter(ctx context.Context, gokmp *gokmpclient.SerialClient, url, tok
 }
 
 func (s *Submitter) poll() error {
+	slog.Debug("fetching registers")
 	regs, err := s.gokmp.GetRegister([]application.RegisterID{
 		application.RegisterHeatEnergy,
 		application.RegisterVolumeRegister1,
@@ -57,7 +59,7 @@ func (s *Submitter) poll() error {
 	}
 
 	for _, reg := range regs {
-		fmt.Printf("got reg: %v\n", reg)
+		slog.Debug("received register", "reg", reg.String())
 	}
 
 	p := influxdb2.NewPointWithMeasurement("heat").
@@ -67,17 +69,23 @@ func (s *Submitter) poll() error {
 		AddField("t_in", regs[2].Value).
 		AddField("t_out", regs[3].Value).
 		SetTime(time.Now())
+	slog.Debug("created influxdb2 point")
 
 	if err = s.influxWriteAPI.WritePoint(s.context, p); err != nil {
 		return fmt.Errorf("error submitting to influxdb: %v", err)
 	}
+	slog.Debug("submitted to influxdb2")
 
 	return nil
 }
 
 func (s *Submitter) Run() {
 	ticker := time.NewTicker(s.interval)
+	slog.Debug("creating timer", "interval", s.interval.String())
 	for ; true; <-ticker.C {
-		s.poll()
+		slog.Debug("timer ticked")
+		if err := s.poll(); err != nil {
+			slog.Warn("error polling, ignoring for now", "error", err.Error())
+		}
 	}
 }

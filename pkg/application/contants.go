@@ -15,4 +15,6 @@ var (
 	ErrShortRegister       = errors.New("not enough data to decode register")
 	ErrShortSerial         = errors.New("not enough data to decode serial number")
 	ErrLondSerial          = errors.New("too much data to decode serial number")
+	ErrShortGetType        = errors.New("not enough data to decode type")
+	ErrLongGetType         = errors.New("too much data to decode type")
 )

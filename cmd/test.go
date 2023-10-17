@@ -49,5 +49,10 @@ func testMeter(cmd *cobra.Command, args []string) {
 		panic(err)
 	}
 
-	fmt.Printf("serial: %d\n", sn)
+	typ, version, err := c.GetType()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("type: %02x, version: %02x, serial: %d\n", typ, version, sn)
 }

@@ -1,0 +1,4 @@
+github.com/go-test/deep v1.1.0 h1:WOcxcdHcvdgThNXjw0t76K42FXTU7HpNQWHpA2HHNlg=
+github.com/go-test/deep v1.1.0/go.mod h1:5C2ZWiW0ErCdrYzpqxLbTX7MG14M9iiw8DgHncVwcsE=
+github.com/snksoft/crc v1.1.0 h1:HkLdI4taFlgGGG1KvsWMpz78PkOC9TkPVpTV/cuWn48=
+github.com/snksoft/crc v1.1.0/go.mod h1:5/gUOsgAm7OmIhb6WJzw7w5g2zfJi4FrHYgGPdshE+A=

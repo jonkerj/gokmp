@@ -3,9 +3,11 @@ package client
 import (
 	"fmt"
 	"log/slog"
+	"slices"
 
 	"github.com/jonkerj/gokmp/pkg/application"
 	"github.com/jonkerj/gokmp/pkg/datalink"
+	"github.com/jonkerj/gokmp/pkg/physical"
 	"go.bug.st/serial"
 )
 
@@ -48,6 +50,10 @@ func (s *SerialClient) command(command application.Command) (application.Command
 		}
 
 		bytesRead = append(bytesRead, buff[:lenRead]...)
+
+		if slices.Contains(buff[:lenRead], physical.StopByte) {
+			break
+		}
 	}
 
 	bytesRead = bytesRead[len(commandBytes):] // remove command echo

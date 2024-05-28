@@ -63,7 +63,7 @@ func Open(givenPortName, vid, pid, serialNo string) (serial.Port, error) {
 	}
 
 	slog.Debug("setting read timeout")
-	err = port.SetReadTimeout(100 * time.Millisecond)
+	err = port.SetReadTimeout(2 * time.Second)
 	if err != nil {
 		return nil, err
 	}

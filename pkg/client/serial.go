@@ -4,11 +4,9 @@ import (
 	"encoding/hex"
 	"fmt"
 	"log/slog"
-	"slices"
 
 	"github.com/jonkerj/gokmp/pkg/application"
 	"github.com/jonkerj/gokmp/pkg/datalink"
-	"github.com/jonkerj/gokmp/pkg/physical"
 	"go.bug.st/serial"
 )
 
@@ -53,10 +51,6 @@ func (s *SerialClient) command(command application.Command) (application.Command
 		slog.Debug("received data", "bytes", hex.EncodeToString(buff[:lenRead]))
 
 		bytesRead = append(bytesRead, buff[:lenRead]...)
-
-		if slices.Contains(buff[:lenRead], physical.StopByte) {
-			break
-		}
 	}
 
 	bytesRead = bytesRead[len(commandBytes):] // remove command echo

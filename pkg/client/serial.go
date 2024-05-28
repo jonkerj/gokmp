@@ -1,6 +1,7 @@
 package client
 
 import (
+	"encoding/hex"
 	"fmt"
 	"log/slog"
 	"slices"
@@ -48,6 +49,8 @@ func (s *SerialClient) command(command application.Command) (application.Command
 		if lenRead == 0 {
 			break
 		}
+
+		slog.Debug("received data", "bytes", hex.EncodeToString(buff[:lenRead]))
 
 		bytesRead = append(bytesRead, buff[:lenRead]...)
 

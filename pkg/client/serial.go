@@ -45,6 +45,7 @@ func (s *SerialClient) command(command application.Command) (application.Command
 		}
 
 		if lenRead == 0 {
+			slog.Debug("zero bytes from port, stopping reading")
 			break
 		}
 

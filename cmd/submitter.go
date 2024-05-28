@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"context"
-	"fmt"
+	"log/slog"
 	"time"
 
 	"github.com/jonkerj/gokmp/internal/serial"
@@ -52,7 +52,7 @@ func submit(cmd *cobra.Command, args []string) {
 		panic(err)
 	}
 
-	fmt.Printf("type: %02x, version: %02x, serial: %d\n", typ, version, sn)
+	slog.Info("found KMP meter", "type", typ, "version", version, "serialno", sn)
 	s, err := submitter.NewSubmitter(
 		context.TODO(),
 		c,

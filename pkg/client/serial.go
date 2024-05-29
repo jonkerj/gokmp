@@ -42,6 +42,7 @@ func (s *SerialClient) command(command application.Command) (application.Command
 
 	for {
 		lenRead, err := s.port.Read(buff)
+
 		if err != nil {
 			return nil, fmt.Errorf("could not read from port: %w", err)
 		}
@@ -51,9 +52,8 @@ func (s *SerialClient) command(command application.Command) (application.Command
 			break
 		}
 
-		slog.Debug("received data", "bytes", hex.EncodeToString(buff[:lenRead]), "len", len(bytesRead), "bytesRead", hex.EncodeToString(bytesRead))
-
 		bytesRead = append(bytesRead, buff[:lenRead]...)
+		slog.Debug("received data", "bytes", hex.EncodeToString(buff[:lenRead]), "len", len(bytesRead), "bytesRead", hex.EncodeToString(bytesRead))
 	}
 
 	bytesRead = bytesRead[len(commandBytes):] // remove command echo

@@ -26,6 +26,8 @@ func (s *SerialClient) command(command application.Command) (application.Command
 	commandFrame := command.ToFrame()
 	commandBytes := commandFrame.EncodeFrame()
 
+	slog.Debug("sending data", "bytes", hex.EncodeToString(commandBytes))
+
 	written, err := s.port.Write(commandBytes)
 	if err != nil {
 		return nil, fmt.Errorf("could not write to serial port: %w", err)
@@ -49,7 +51,7 @@ func (s *SerialClient) command(command application.Command) (application.Command
 			break
 		}
 
-		slog.Debug("received data", "bytes", hex.EncodeToString(buff[:lenRead]))
+		slog.Debug("received data", "bytes", hex.EncodeToString(buff[:lenRead]), "len", len(bytesRead), "bytesRead", hex.EncodeToString(bytesRead))
 
 		bytesRead = append(bytesRead, buff[:lenRead]...)
 	}

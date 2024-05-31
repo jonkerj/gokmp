@@ -76,7 +76,7 @@ jobs:
           org.opencontainers.image.version=${{ needs.tag.outputs.tag }}
           org.opencontainers.image.revision=${{ github.sha }}
           org.opencontainers.image.licenses=${{ github.event.repository.license.spdx_id }}
-
+        outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=${{ github.event.repository.description }}
   release:
     needs:
     - tag

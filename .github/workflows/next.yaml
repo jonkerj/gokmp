@@ -37,3 +37,5 @@ jobs:
           org.opencontainers.image.created=${{ env.DATE }}
           org.opencontainers.image.revision=${{ github.sha }}
           org.opencontainers.image.licenses=${{ github.event.repository.license.spdx_id }}
+        annotations:
+          org.opencontainers.image.description=${{ github.event.repository.description }}

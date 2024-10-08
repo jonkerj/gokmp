@@ -2,12 +2,10 @@ package cmd
 
 import (
 	"context"
-	"log/slog"
 	"time"
 
 	"github.com/jonkerj/gokmp/internal/serial"
 	"github.com/jonkerj/gokmp/internal/submitter"
-	"github.com/jonkerj/gokmp/pkg/client"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -36,26 +34,14 @@ func init() {
 }
 
 func submit(cmd *cobra.Command, args []string) {
-	port, err := serial.Open(viper.GetString("port"), viper.GetString("serial-vid"), viper.GetString("serial-pid"), viper.GetString("serial-serial"))
+	portName, err := serial.GetPortName(viper.GetString("port"), viper.GetString("serial-vid"), viper.GetString("serial-pid"), viper.GetString("serial-serial"))
 	if err != nil {
 		panic(err)
 	}
 
-	c := client.NewSerialClient(port)
-	sn, err := c.GetSerialNo()
-	if err != nil {
-		panic(err)
-	}
-
-	typ, version, err := c.GetType()
-	if err != nil {
-		panic(err)
-	}
-
-	slog.Info("found KMP meter", "type", typ, "version", version, "serialno", sn)
 	s, err := submitter.NewSubmitter(
 		context.TODO(),
-		c,
+		portName,
 		viper.GetString("influxdb-url"),
 		viper.GetString("influxdb-token"),
 		viper.GetString("influxdb-org"),

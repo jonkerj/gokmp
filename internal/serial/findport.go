@@ -16,7 +16,8 @@ var (
 	NoMatchingPortsError = errors.New("no matching ports found")
 )
 
-func getPortName(portName, vid, pid, serialNo string) (string, error) {
+func GetPortName(portName, vid, pid, serialNo string) (string, error) {
+	slog.Debug("finding serial port", "portName", portName, "vid", vid, "pid", pid)
 	name := portName
 	if name != "" {
 		return name, nil
@@ -41,13 +42,7 @@ func getPortName(portName, vid, pid, serialNo string) (string, error) {
 	return "", NoMatchingPortsError
 }
 
-func Open(givenPortName, vid, pid, serialNo string) (serial.Port, error) {
-	slog.Debug("finding serial port")
-	portName, err := getPortName(givenPortName, vid, pid, serialNo)
-	if err != nil {
-		return nil, err
-	}
-
+func Open(portName string) (serial.Port, error) {
 	slog.Debug("opening port", "port", portName)
 	port, err := serial.Open(
 		portName,
@@ -63,7 +58,7 @@ func Open(givenPortName, vid, pid, serialNo string) (serial.Port, error) {
 	}
 
 	slog.Debug("setting read timeout")
-	err = port.SetReadTimeout(2 * time.Second)
+	err = port.SetReadTimeout(1600 * time.Millisecond)
 	if err != nil {
 		return nil, err
 	}

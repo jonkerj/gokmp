@@ -10,6 +10,7 @@ import (
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 	"github.com/influxdata/influxdb-client-go/v2/api"
 	"github.com/influxdata/influxdb-client-go/v2/domain"
+	"github.com/jonkerj/gokmp/internal/serial"
 	"github.com/jonkerj/gokmp/pkg/application"
 	gokmpclient "github.com/jonkerj/gokmp/pkg/client"
 )
@@ -17,13 +18,13 @@ import (
 type (
 	Submitter struct {
 		context        context.Context
-		gokmp          *gokmpclient.SerialClient
+		portName       string
 		influxWriteAPI api.WriteAPIBlocking
 		interval       time.Duration
 	}
 )
 
-func NewSubmitter(ctx context.Context, gokmp *gokmpclient.SerialClient, url, token, org, bucket string, interval time.Duration) (*Submitter, error) {
+func NewSubmitter(ctx context.Context, port, url, token, org, bucket string, interval time.Duration) (*Submitter, error) {
 	client := influxdb2.NewClient(url, token)
 	health, err := client.Health(ctx)
 	if err != nil {
@@ -36,15 +37,23 @@ func NewSubmitter(ctx context.Context, gokmp *gokmpclient.SerialClient, url, tok
 
 	return &Submitter{
 		context:        ctx,
-		gokmp:          gokmp,
+		portName:       port,
 		influxWriteAPI: client.WriteAPIBlocking(org, bucket),
 		interval:       interval,
 	}, nil
 }
 
 func (s *Submitter) poll() error {
+	port, err := serial.Open(s.portName)
+	if err != nil {
+		return fmt.Errorf("error opening serial port: %v", err)
+	}
+	defer port.Close()
+
+	gokmp := gokmpclient.NewSerialClient(port)
+
 	slog.Debug("fetching registers")
-	regs, err := s.gokmp.GetRegister([]application.RegisterID{
+	regs, err := gokmp.GetRegister([]application.RegisterID{
 		application.RegisterHeatEnergy,
 		application.RegisterVolumeRegister1,
 		application.RegisterCurrentInTemp,

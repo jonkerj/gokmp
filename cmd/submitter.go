@@ -25,6 +25,7 @@ func init() {
 	flags.String("influxdb-url", "http://influxdb.influxdb:8086", "InfluxDB URL")
 	flags.String("influxdb-token", "notme:notmypassword", "InfluxDB token")
 	flags.String("influxdb-bucket", "iioflux/autogen", "InfluxDB bucket")
+	flags.StringSlice("influxdb-tag", []string{"foo=bar"}, "Tag(s) to set. Comma separated, may be repeated")
 	rootCmd.AddCommand(submitCmd)
 
 	err := viper.BindPFlags(flags)
@@ -46,6 +47,7 @@ func submit(cmd *cobra.Command, args []string) {
 		viper.GetString("influxdb-token"),
 		viper.GetString("influxdb-org"),
 		viper.GetString("influxdb-bucket"),
+		viper.GetStringSlice("influxdb-tag"),
 		viper.GetDuration("interval"),
 	)
 	if err != nil {

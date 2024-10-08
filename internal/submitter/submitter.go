@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"strings"
 	"time"
 
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
@@ -21,10 +22,11 @@ type (
 		portName       string
 		influxWriteAPI api.WriteAPIBlocking
 		interval       time.Duration
+		tags           []string
 	}
 )
 
-func NewSubmitter(ctx context.Context, port, url, token, org, bucket string, interval time.Duration) (*Submitter, error) {
+func NewSubmitter(ctx context.Context, port, url, token, org, bucket string, tags []string, interval time.Duration) (*Submitter, error) {
 	client := influxdb2.NewClient(url, token)
 	health, err := client.Health(ctx)
 	if err != nil {
@@ -71,9 +73,17 @@ func (s *Submitter) poll() error {
 		slog.Debug("received register", "reg", reg.String())
 	}
 
-	p := influxdb2.NewPointWithMeasurement("heat").
-		AddTag("location", "gareelhoek").
-		AddField("energy", regs[0].Value*10e9).
+	p := influxdb2.NewPointWithMeasurement("heat")
+	for _, tag := range s.tags {
+		parts := strings.Split(tag, "=")
+
+		if len(parts) != 2 {
+			return fmt.Errorf("supplied tag '%s' is not in the form 'foo=bar'", tag)
+		}
+
+		p = p.AddTag(parts[0], parts[1])
+	}
+	p = p.AddField("energy", regs[0].Value*10e9).
 		AddField("volume", regs[1].Value).
 		AddField("t_in", regs[2].Value).
 		AddField("t_out", regs[3].Value).

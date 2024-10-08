@@ -37,11 +37,14 @@ func NewSubmitter(ctx context.Context, port, url, token, org, bucket string, tag
 		return nil, fmt.Errorf("influxdb server was not healthy, status=%v", health.Status)
 	}
 
+	slog.Info("setting up KMP to influx submitter", "port", port, "url", url, "org", org, "bucket", bucket, "tags", tags, "interval", interval)
+
 	return &Submitter{
 		context:        ctx,
 		portName:       port,
 		influxWriteAPI: client.WriteAPIBlocking(org, bucket),
 		interval:       interval,
+		tags:           tags,
 	}, nil
 }
 
